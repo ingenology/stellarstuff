@@ -1,0 +1,587 @@
+<wire>
+
+   <datasources>
+           
+       <datasource name="twittersource" source="" query="//status" providertype="twitter"/>
+       <datasource name="facebook" source="" query="/data" providertype="facebook"/>
+       
+       <datasource name="spinoffs" source="" query="/results" providertype="json" />
+
+   </datasources>
+
+   <styles>
+
+
+   </styles>
+
+   <classes>
+       <class name="spinoffItem">
+            <panel name="item-[param:index]" width="140" height="140" cornerradius="70" ypos="[param:ypos]" align="[param:align]" background="#C0C2C4" draggable="yes" ondrag="set-info" _ypos="[param:ypos]" _align="[param:align]" _index="[param:index]" clip="yes" ondrop="item-reset" >
+                <image name="img" url="[param:source]" width="100%" ignoretouches="yes" ></image>
+                <panel name="complete" width="100%" height="100%" background="#000000" alpha="0" ignoretouches="yes" ></panel> 
+            </panel>
+         	<text name="label-[param:index]" align="[param:align]" width="140" height="30" bottomof="item-[param:index]" color="#000000" font="Helvetica" size="12" alignment="center" text="[param:label]"></text>
+       </class>
+        
+       <class name="itemInfo">
+            <panel name="itemInfo" alias="ITEM-INFO" width="580" fitheight="yes" ypos="30" xpos="99%" >
+                <panel name="imageContainer" width="120" height="120" cornerradius="60" background="#C0C2C4" ypos="75" clip="yes" onclickup="name" >
+                    <image name="img" url="[param:source]" width="100%" ></image>
+                </panel>
+                <text name="title" width="400" align="right" height="fit" color="#000000" font="Helvetica" size="28" alignment="left" text="[param:title]" onclickup="name" ></text>
+                <text name="date" width="400" align="right" height="fit" bottomof="title" topmargin="5" color="#000000" font="Helvetica" size="18" alignment="left" text="[param:date]" onclickup="name" ></text>
+                <text name="info" width="400" align="right" height="fit" bottomof="date" topmargin="5" color="#000000" font="Helvetica" size="16" alignment="left" text="[param:info]" onclickup="name" ></text>
+                <panel name="deepDive" width="157" height="35" cornerradius="5" onclick="select" onclickup="show-web" xpos="170" bottomof="info" topmargin="15" background="#5ABBB5" _url="[param:url]" >
+                    <image name="img" source="graphics/button.small.png"></image>
+                    <panel name="curtain" width="100%" height="100%" cornerradius="10" background="#000000" alpha="0"></panel>
+                    <text name="label" width="100%" height="100%" color="#FFFFFF" font="Arial-BoldMT" size="18" alignment="center" text="LEARN MORE" ></text>
+                </panel>
+            </panel>
+       </class>
+
+    </classes>
+
+    <main>
+
+		<panel name="dummy" alias="DUMMY" width="1" height="1" xpos="0" ypos="0" alpha="0"></panel>
+
+        <panel name="container" alias="CONTAINER" width="100%" height="100%">
+        
+            <panel name="home" alias="HOME" width="100%" height="100%" background="#ffffff" >
+                <panel name="bg" width="100%" height="100%" align="center" >
+                    <image name="bg" source="graphics/home-screen.png"></image>
+                </panel>
+                <panel name="user" width="528" height="128" align="center" ypos="615" onclick="select" onclickup="show-instructions">
+                    <image name="img" source="graphics/button.large.png"></image>
+                    <panel name="curtain" width="100%" height="100%" cornerradius="10" background="#000000" alpha="0"></panel>
+                    <text name="label" width="100%" height="100%" color="#FFFFFF" font="Arial-BoldMT" size="40" alignment="center" text="NEW USER" ignoretouches="yes" ></text>
+                </panel>
+                <panel name="mission" width="528" height="128" ypos="766" onclick="select" onclickup="show-mission" _section="MISSION" align="center" >
+                    <image name="img" source="graphics/button.large.png"></image>
+                    <panel name="curtain" width="100%" height="100%" cornerradius="10" background="#000000" alpha="0"></panel>
+                    <text name="label" width="100%" height="100%" color="#FFFFFF" font="Arial-BoldMT" size="40" alignment="center" text="MISSION CONTROL" ignoretouches="yes" ></text>                    
+                </panel>
+            </panel> 
+            
+            <panel name="instructions" alias="INSTRUCTIONS" width="100%" height="100%" background="#ffffff" xpos="0%" hidden="yes" >
+                <image name="instructs" source="graphics/Instruction.png" width="80%" align="center" ypos="69"></image>
+               <!-- <panel name="mission" width="528" height="128" ypos="788" onclick="select" onclickup="show-mission" _section="MISSION" align="center" >
+                    <image name="img" source="graphics/button.large.png"></image>
+                    <panel name="curtain" width="100%" height="100%" cornerradius="10" background="#000000" alpha="0"></panel>
+                    <text name="label" width="100%" height="100%" color="#FFFFFF" font="Arial-BoldMT" size="40" alignment="center" text="MISSION CONTROL" ignoretouches="yes" ></text>                    
+                </panel>-->
+            </panel>
+            
+            <panel name="mission" alias="MISSION" width="100%" height="100%" xpos="0%" background="#ffffff" hidden="yes" >
+                <panel name="answerBox" width="100%" height="330" ypos="625" background="#F1F2F2" >
+                </panel>
+                <panel name="items" width="517" height="500" align="center" ypos="109" >
+                    <panel name="reset" width="100%" height="335" ondrop="item-reset" ></panel>
+                    <panel name="submissionBox" width="600" height="165" valign="bottom" align="center" ondrop="show-info" >
+                        <image name="box" height="80%" source="graphics/stellarizer.png" align="center" valign="bottom" ></image>
+                    </panel>
+                    <object class="spinoffItem" index="1" ypos="0" align="left" url="" label=""/>
+                    <object class="spinoffItem" index="2" ypos="0" align="center" url="" label=""/>
+                    <object class="spinoffItem" index="3" ypos="0" align="right" url="" label=""/>
+                    <object class="spinoffItem" index="4" ypos="190" align="left" url="" label=""/>
+                    <object class="spinoffItem" index="5" ypos="190" align="center" url="" label=""/>
+                    <object class="spinoffItem" index="6" ypos="190" align="right" url="" label=""/>
+                    
+                </panel>
+                <panel name="progressSection" width="100%" height="80" background="#38414E" valign="bottom" >
+                    <panel name="progressContainer" width="600" height="52" valign="center" align="center" >
+                        <panel name="progress" alias="PROGRESS" width="100%" height="40" valign="center" background="#ffffff" cornerradius="5" clip="yes" >
+                            <panel name="progressBar" alias="GRAY" width="620" height="52" valign="center" xpos="-620" cornerradius="5" clip="yes" >
+                                <panel name="gray" width="100%" height="100%" background="4EBBB5" xpos="0"></panel>
+                            </panel>
+                            <panel name="bar1" width="1" height="100%" background="#000000" xpos="16.7%" ></panel>
+                            <panel name="bar2" width="1" height="100%" background="#000000" xpos="33.3%" ></panel>
+                            <panel name="bar3" width="1" height="100%" background="#000000" xpos="50%" ></panel>
+                            <panel name="bar4" width="1" height="100%" background="#000000" xpos="66.7%" ></panel>
+                            <panel name="bar5" width="1" height="100%" background="#000000" xpos="83.4%" ></panel>
+                        </panel>
+                        <panel name="complete" alias="COMPLETE" width="291" height="43" align="center" valign="center" alpha="0" onclick="select" onclickup="show-quiz" >
+                            <image name="img" source="graphics/button.quiz.png"></image>
+                            <panel name="curtain" width="100%" height="100%" alpha="0" background="#000000"></panel>
+                            <text name="congrats" width="100%" height="100%" color="#ffffff" font="Helvetica" size="24" alignment="center" text="TAKE THE QUIZ!"></text>
+                        </panel>
+                    </panel>
+                    <image name="rocket" alias="ROCKET" source="graphics/rocket.png" xpos="65" valign="center" ></image>
+                </panel>
+            </panel>
+            
+            <panel name="quiz" alias="QUIZ" width="100%" height="100%" background="#ffffff" xpos="0%" hidden="yes" >
+                <panel name="inner" width="100%" height="100%">
+                    <text name="header" width="100%" height="fit" ypos="130" color="#000000" font="Arial-BoldMT" size="28" alignment="center" text="Question 1 of 6" ></text>
+                    <text name="question" align="center" width="90%" height="fit" bottomof="header" topmargin="40" color="#000000" font="Arial" size="24" alignment="center" text="Lorem ipsum et al dolor question lorem ipsum et al dolor question?"></text>
+                    <panel name="answers" alias="ANSWERS" width="600" height="352" ypos="300" align="center" >
+                        <panel name="reset" width="100%" height="235" ondrop="item-reset" ></panel>
+                        <object class="spinoffItem" index="0" ypos="0" align="left" url="" label="" />
+                        <object class="spinoffItem" index="1" ypos="0" align="center" url="" label=""/>
+                        <object class="spinoffItem" index="2" ypos="0" align="right" url="" label=""/>
+                        <image name="submissionBox" source="graphics/stellarizer.png" ondrop="check-answer" valign="bottom" ></image>
+                    </panel>
+                    <panel name="results" alias="RESULTS" width="100%" height="200" ypos="695" alpha="0" >
+                        <image name="result" source="graphics/correct.png" align="center" ></image>
+                        <text name="label" width="100%" height="fit" color="#58B947" font="Arial-BoldMT" size="34" alignment="center" text="CORRECT!" bottomof="result" topmargin="5" ></text>
+                    </panel>
+                </panel>
+            </panel>
+            
+            <panel name="success" alias="SUCCESS" width="100%" height="100%" valign="center" xpos="0%" hidden="yes" background="#ffffff" >
+                <panel name="bg" width="100%" height="100%">
+                    <image name="img" alias="SUCCESS-IMG" source="graphics/Level-1-Social.png" align="center" width="50%" ypos="224"></image>
+                </panel>
+                <text name="copy" width="100%" height="330" color="#000000" font="Helvetica" size="28" alignment="center" text="CONGRATULATIONS, YOU'VE RECEIVED A BADGE! SHARE WITH YOUR FRIENDS OR START THE NEXT MISSION!"></text>
+                <panel name="facebook" width="276" height="70" xpos="84" ypos="636" onclick="select" onclickup="facebook-post" cornerradius="10" clip="yes" >
+                    <image name="img" source="graphics/button.blue.small.png"></image>
+                    <panel name="curtain" width="100%" height="100%" alpha="0" background="#000000"></panel>
+                    <text name="label" width="100%" height="100%" color="#ffffff" font="Arial-BoldMT" size="24" alignment="center" text="FACEBOOK"></text>
+                </panel>
+                <panel name="twitter" width="276" height="70" xpos="408" ypos="636" onclick="select" onclickup="tweet" cornerradius="10" clip="yes" >
+                    <image name="img" source="graphics/button.blue.small.png"></image>
+                    <panel name="curtain" width="100%" height="100%" alpha="0" background="#000000"></panel>
+                    <text name="label" width="100%" height="100%" color="#ffffff" font="Arial-BoldMT" size="24" alignment="center" text="TWITTER"></text>
+                </panel>
+                <panel name="nextMission" width="500" height="100" align="center" ypos="766" onclick="select" onclickup="next-mission" cornerradius="10" clip="yes" >
+                    <image name="img" source="graphics/button.blue.large.png"></image>
+                    <panel name="curtain" width="100%" height="100%" alpha="0" background="#000000"></panel>
+                    <text name="label" width="100%" height="100%" color="#ffffff" font="Arial-BoldMT" size="43" alignment="center" text="NEXT MISSION"></text>
+                </panel>
+            </panel>
+            
+        </panel>
+
+		<panel name="webContainer" alias="WEB-CONTAINER" width="100%" height="100%" ypos="100%" >
+          <panel name="toolbar" alias="TOOLBAR-WEB" width="100%" height="68" valign="top" background="#38414E" >
+            <panel name="return" width="236" height="35" xpos="14" valign="center" onclick="select" onclickup="hide-web" cornerradius="5" clip="yes" >
+                <image name="img" source="graphics/button.medium.png"></image>
+                <panel name="curtain" width="100%" height="100%" background="#000000" alpha="0"></panel>
+                <text name="label" width="100%" height="100%" color="#FFFFFF" font="Arial-BoldMT" size="15" alignment="center" text="BACK TO LAUNCH SCREEN" ignoretouches="yes" ></text>
+            </panel>
+            
+          </panel>
+          <web name="web" alias="WEB" width="100%" height="956" valign="bottom" url="about:blank" pagetofit="yes" onnavigation="show-back" ></web>
+        </panel>
+		
+        <panel name="toolbar" alias="TOOLBAR" width="100%" height="68" background="#38414E" xpos="0%" ypos="-68" >
+            <panel name="return" width="236" height="35" xpos="14" valign="center" onclick="select" onclickup="home" cornerradius="5" clip="yes" >
+                <image name="img" source="graphics/button.medium.png"></image>
+                <panel name="curtain" width="100%" height="100%" background="#000000" alpha="0"></panel>
+                <text name="label" width="100%" height="100%" color="#FFFFFF" font="Arial-BoldMT" size="15" alignment="center" text="BACK TO LAUNCH SCREEN" ignoretouches="yes" ></text>
+            </panel>
+            <image name="info" source="graphics/info.png" valign="center" xpos="718" alpha="0" onclickup="show-instructions" ></image>
+        </panel>
+
+        <!-- !twitter sign-in browser -->
+		<panel name="browser" alias="BROWSER" width="100%" height="100%" ypos="1000%" alpha="0">
+			<panel name="toolbar" width="100%" height="5%" lheight="7%" background="#cccccc" >
+                <panel name="rule" width="100%" height="1" background="#666666" ></panel>
+				<panel name="twiterAuth" alias="TWITTERAUTH" width="50%" lwidth="40%" height="100%" alpha="0" align="right" rightmargin="1%">
+					<textfield name="id-textfield" alias="id-textfield" placeholder="type the authorization code here" font="HelveticaNeue" size="18" border="round" align="left" bottomof="browser" height="60%" width="75%" valign="center"/>
+					<text name="submit" width="100" height="100%" color="#000000" font="HelveticaNeue" size="18" alignment="center" text="Submit" align="right" onclickup="submit-twit-id" ></text>
+				</panel>
+				<image name="close" source="images/ipad/close.png" valign="center" xpos="1%" onclickup="close-browser"></image>
+			</panel>
+			<web name="web-viewer" alias="WEB-VIEWER" width="100%" height="95%" lheight="93%" url="" pagetofit="yes" valign="bottom"></web>
+		</panel>
+		
+    </main>
+
+    <actions>
+
+        <action name="load" oninit="yes" >
+            <assign property="var:section" value="home" />
+            <assign property="var:level" value="1" />
+            <if lhs="[preferences:instructions]" operator="e" rhs="shown">
+                <assign property="object:HOME/user/label.text" value="INSTRUCTIONS" />
+            </if>
+            <assign property="var:infoOn" value="no" />
+            <assign property="datasource:spinoffs.source" value="http://spinoffs.ingenology.com/v1/facts/?format=json&amp;level=[var:level]" />
+        </action>
+        
+        <action name="home" >
+            <alpha value="0" target="curtain" />
+            <assign property="object:HOME/user/label.text" value="INSTRUCTIONS" />
+            <if lhs="[var:infoOn]" operator="e" rhs="yes">
+                <delete target="ITEM-INFO" />
+                <assign property="var:infoOn" value="no" />
+            </if>
+            <sync>
+                <replace type="flipcenterright" target="CONTAINER/[var:section]" time=".25" replacement="HOME" />
+                <assign property="var:section" value="home" />
+            </sync>
+            <assign property="object:MISSION/items/item-1/img.url" value="" />
+            <assign property="object:MISSION/items/item-2/img.url" value="" />
+            <assign property="object:MISSION/items/item-3/img.url" value="" />
+            <assign property="object:MISSION/items/item-4/img.url" value="" />
+            <assign property="object:MISSION/items/item-5/img.url" value="" />
+            <assign property="object:MISSION/items/item-6/img.url" value="" />
+            <alpha value="0" time=".25" target="MISSION/items/item-1/complete" />
+            <alpha value="0" time=".25" target="MISSION/items/item-2/complete" />
+            <alpha value="0" time=".25" target="MISSION/items/item-3/complete" />
+            <alpha value="0" time=".25" target="MISSION/items/item-4/complete" />
+            <alpha value="0" time=".25" target="MISSION/items/item-5/complete" />
+            <alpha value="0" time=".25" target="MISSION/items/item-6/complete" />
+            <assign property="var:item-1" value="" />
+            <assign property="var:item-2" value="" />
+            <assign property="var:item-3" value="" />
+            <assign property="var:item-4" value="" />
+            <assign property="var:item-5" value="" />
+            <assign property="var:item-6" value="" />
+            <assign property="datasource:spinoffs.source" value="http://spinoffs.ingenology.com/v1/facts/?format=json&amp;level=[var:level]" />
+            <translate ypos="-68" curve="easeout" time=".25" target="TOOLBAR" />
+          	
+        </action>
+
+        <action name="show-mission" >
+            <alpha value="0" target="curtain" />
+            <if lhs="[preferences:instructions]" operator="e" rhs="shown">
+                <assign property="object:MISSION/items/item-1/img.url" value="http://spinoffs.ingenology.com/[datasource:spinoffs.1.answer_image]" />
+                <assign property="object:MISSION/items/item-2/img.url" value="http://spinoffs.ingenology.com/[datasource:spinoffs.2.answer_image]" />
+                <assign property="object:MISSION/items/item-3/img.url" value="http://spinoffs.ingenology.com/[datasource:spinoffs.3.answer_image]" />
+                <assign property="object:MISSION/items/item-4/img.url" value="http://spinoffs.ingenology.com/[datasource:spinoffs.4.answer_image]" />
+                <assign property="object:MISSION/items/item-5/img.url" value="http://spinoffs.ingenology.com/[datasource:spinoffs.5.answer_image]" />
+                <assign property="object:MISSION/items/item-6/img.url" value="http://spinoffs.ingenology.com/[datasource:spinoffs.6.answer_image]" />
+				<assign property="object:MISSION/items/label-1.text" value="[datasource:spinoffs.1.answer_text]" />
+                <assign property="object:MISSION/items/label-2.text" value="[datasource:spinoffs.2.answer_text]" />
+                <assign property="object:MISSION/items/label-3.text" value="[datasource:spinoffs.3.answer_text]" />
+                <assign property="object:MISSION/items/label-4.text" value="[datasource:spinoffs.4.answer_text]" />
+                <assign property="object:MISSION/items/label-5.text" value="[datasource:spinoffs.5.answer_text]" />
+                <assign property="object:MISSION/items/label-6.text" value="[datasource:spinoffs.6.answer_text]" />
+
+              	<alpha value="0" time=".25" target="MISSION/items/item-1/complete" />
+                <alpha value="0" time=".25" target="MISSION/items/item-2/complete" />
+                <alpha value="0" time=".25" target="MISSION/items/item-3/complete" />
+                <alpha value="0" time=".25" target="MISSION/items/item-4/complete" />
+                <alpha value="0" time=".25" target="MISSION/items/item-5/complete" />
+                <alpha value="0" time=".25" target="MISSION/items/item-6/complete" />
+                <assign property="var:item-1" value="" />
+                <assign property="var:item-2" value="" />
+                <assign property="var:item-3" value="" />
+                <assign property="var:item-4" value="" />
+                <assign property="var:item-5" value="" />
+                <assign property="var:item-6" value="" />
+                <assign property="var:shown" value="0" />
+                <alpha value="0" target="RESULTS" />
+                <alpha value="0" target="COMPLETE" />
+                <alpha value="1" target="ROCKET" />
+                <alpha value="1" target="PROGRESS" />
+                <translate xpos="65" curve="linear" target="ROCKET" />
+                <translate xpos="-620" curve="linear" target="GRAY" />
+                <sync>
+                    <if lhs="[var:section]" operator="ne" rhs="success">
+                        <replace type="flipcenterleft" target="CONTAINER/[var:section]" time=".25" replacement="MISSION" />
+                    </if>
+                    <if lhs="[var:section]" operator="e" rhs="success">
+                        <replace type="flipcenterright" target="CONTAINER/[var:section]" time=".25" replacement="MISSION" />
+                    </if>
+                    <translate ypos="0" time=".25" curve="easeout" target="TOOLBAR" />
+                    <alpha value="1" time=".25" target="TOOLBAR/info" />
+                    <assign property="var:section" value="mission" />
+                </sync>
+            </if>
+            <if lhs="[preferences:instructions]" operator="ne" rhs="shown">
+                <play action="show-instructions" />
+            </if>
+        </action>
+        
+        <action name="show-instructions">
+            <alpha value="0" target="curtain" />
+            <if lhs="[var:section]" operator="ne" rhs="home">            
+                <set onclickup="hide-instructions" target="TOOLBAR/info" />
+            </if>
+            <if lhs="[var:section]" operator="e" rhs="home">          
+                <alpha value="0" target="TOOLBAR/info" />
+                <translate xpos="0%" time=".25" curve="easeout" target="TOOLBAR" />
+            </if>
+            <sync>
+                <replace type="flipcenterleft" target="CONTAINER/[var:section]" replacement="INSTRUCTIONS" />
+                <translate ypos="0" time=".25" curve="easeout" target="TOOLBAR" delay=".35" />
+                <assign property="var:section" value="instructions" />
+                <assign property="preferences:instructions" value="shown" />
+          		  
+          </sync>
+          	
+        </action>
+        
+        <action name="hide-instructions" >
+            <translate xpos="100%" time=".25" curve="easeout" target="INSTRUCTIONS" />
+        </action>
+        
+        <action name="set-info">
+            <assign property="var:active" value="[object:name]" />
+            <assign property="var:ypos" value="_ypos" />
+            <assign property="var:align" value="_align" />
+            <assign property="var:index" value="_index" />
+        </action>
+
+        <action name="show-info" >
+            <if lhs="[var:[var:active]]" operator="ne" rhs="viewed">
+                <sync>
+                    <if lhs="[var:infoOn]" operator="e" rhs="yes">
+                        <translate xpos="-100%" time=".25" curve="easeout" target="ITEM-INFO" />
+                        <delete target="ITEM-INFO" />
+                        <assign property="var:infoOn" value="no" />
+                    </if>
+                    <create class="itemInfo" source="http://spinoffs.ingenology.com/[datasource:spinoffs.[var:index].answer_image]" title="[datasource:spinoffs.[var:index].answer_text]" date="[eval: JSON.parse('[datasource:spinoffs.[var:index].spinoff]')['year']]" info="[datasource:spinoffs.[var:index].fact]" url="[eval: JSON.parse('[datasource:spinoffs.[var:index].spinoff]')['source_url']]" target="MISSION/answerBox" />
+                    <assign property="var:infoOn" value="yes" />
+                    <translate align="center" time=".25" curve="easeout" target="ITEM-INFO" />
+                </sync>
+                <translate xpos="[eval: [object:GRAY.xpos]+100 ]" time=".25"  curve="easeout" target="GRAY" />
+                <translate xpos="[eval: [object:ROCKET.xpos]+100 ]" time=".25" curve="easeout" target="ROCKET" />
+                <if lhs="[var:shown]" operator="ne" rhs="6">
+                    <assign property="var:shown" value="[eval: [var:shown]+1]" />
+                    <if lhs="[var:shown]" operator="e" rhs="6">
+                        <play action="show-complete" />
+                    </if>
+                </if>
+            </if>
+            <sync>
+                <translate ypos="[var:ypos]" align="[var:align]" time=".25" curve="easeout" target="MISSION/items/[var:active]" />
+                <alpha value=".3" time=".25" target="MISSION/items/[var:active]/complete" />
+            </sync>
+            <assign property="var:[var:active]" value="viewed" />
+        </action>
+        
+        <action name="item-reset" >
+            <if lhs="[var:section]" operator="e" rhs="mission">
+                <translate ypos="[var:ypos]" align="[var:align]" time=".25" curve="easeout" target="MISSION/items/[var:active]" />
+            </if>
+            <if lhs="[var:section]" operator="e" rhs="quiz">
+                <translate ypos="[var:ypos]" align="[var:align]" time=".25" curve="easeout" target="ANSWERS/[var:active]" />
+            </if>
+        </action>
+        
+        <action name="show-web" >
+            
+            <alpha value="0" target="curtain" />
+            <load url="_url" target="WEB" /> 
+            <alpha value="0" time=".4" target="TOOLBAR"/>
+            <translate ypos="0%" time=".4" curve="easeout" target="WEB-CONTAINER" />
+            
+        </action>
+        
+        <action name="hide-web" >
+            <load url="about:blank" target="WEB" />
+            <translate ypos="120%" time=".4" curve="easeout" target="WEB-CONTAINER" />
+            <alpha value="1" time=".4" target="TOOLBAR"/>           
+        </action>
+
+        <action name="show-complete" >
+            <alpha value="0" target="PROGRESS" />
+            <alpha value="0" target="ROCKET" />
+            <alpha value="1" target="COMPLETE" />
+        </action>
+        
+        <action name="hide-complete" >
+            <translate xpos="100%" time=".3" curve="easeout" target="COMPLETE" />
+        </action>
+        
+        <action name="show-quiz" >
+            <alpha value="0" target="curtain" />
+            <replace type="flipcenterleft" target="CONTAINER/[var:section]" replacement="QUIZ" />
+            <assign property="var:question" value="1" />
+            <assign property="var:section" value="quiz" />
+            <assign property="datasource:spinoffs.source" value="http://spinoffs.ingenology.com/v1/facts/?format=json&amp;level=[var:level]" />
+        </action>
+
+        <action name="hide-quiz" >
+            <assign property="object:QUIZ/inner/header.text" value="Question 1 of 6" />
+        </action>
+
+        <action name="spinoffsDone" datasource="spinoffs" datasourceevent="querycomplete" >
+            <if lhs="[var:section]" operator="e" rhs="success">
+                <play action="show-mission"/>
+            </if>
+            <if lhs="[var:section]" operator="e" rhs="quiz">
+                <assign property="object:QUIZ/inner/header.text" value="Question 1 of 6" />
+                <assign property="object:QUIZ/inner/question.text" value="[datasource:spinoffs.[var:question].question]" />
+                <assign property="object:ANSWERS/item-0/img.url" value="http://spinoffs.ingenology.com/[eval: JSON.parse('[datasource:spinoffs.1.choices]')[0][1] ]" />
+                <assign property="object:ANSWERS/item-1/img.url" value="http://spinoffs.ingenology.com/[eval: JSON.parse('[datasource:spinoffs.1.choices]')[1][1] ]" />
+                <assign property="object:ANSWERS/item-2/img.url" value="http://spinoffs.ingenology.com/[eval: JSON.parse('[datasource:spinoffs.1.choices]')[2][1] ]" />
+                <sync>
+                    <delete target="ITEM-INFO" />
+                    <assign property="var:infoOn" value="no" />
+                    <assign property="object:MISSION/items/item-1/img.url" value="" />
+                    <assign property="object:MISSION/items/item-2/img.url" value="" />
+                    <assign property="object:MISSION/items/item-3/img.url" value="" />
+                    <assign property="object:MISSION/items/item-4/img.url" value="" />
+                    <assign property="object:MISSION/items/item-5/img.url" value="" />
+                    <assign property="object:MISSION/items/item-6/img.url" value="" />
+                </sync>
+            </if>
+        </action>
+
+        <action name="check-answer" >
+            <if lhs="[eval: JSON.parse('[datasource:spinoffs.[var:question].choices]')[[var:index]][0]]" operator="e" rhs="[datasource:spinoffs.[var:question].answer_text]">
+                <play action="correct" />             
+            </if>
+            <if lhs="[eval: JSON.parse('[datasource:spinoffs.[var:question].choices]')[[var:index]][0]]" operator="ne" rhs="[datasource:spinoffs.[var:question].answer_text]">
+                <play action="incorrect" />
+            </if>
+        </action>
+        
+        <action name="correct" >
+            <translate ypos="0" align="[var:align]" time=".25" curve="easeout" target="ANSWERS/[var:active]" />
+            <load source="graphics/correct.png" target="RESULTS/result" />
+            <assign property="object:RESULTS/label.text" value="CORRECT!" />
+            <assign property="object:RESULTS/label.color" value="#58B947" />
+            <alpha value="1" target="RESULTS" />
+            <if lhs="[var:question]" operator="e" rhs="6">
+                <sync>
+                    <translate xpos="[eval: [object:DUMMY.xpos] + 1]" time="1" curve="linear" target="DUMMY" />
+                    <play action="show-success" />
+                </sync>
+            </if>
+            <if lhs="[var:question]" operator="ne" rhs="6">
+                <sync>
+                    <translate xpos="[eval: [object:DUMMY.xpos] + 1]" time="1" curve="linear" target="DUMMY" />
+                    <assign property="var:question" value="[eval: [var:question] + 1]" />
+                    <play action="next-question" />
+                </sync>
+            </if>
+        </action>
+        
+        <action name="incorrect" >
+            <translate ypos="0" align="[var:align]" time=".25" curve="easeout" target="ANSWERS/[var:active]" />
+            <load source="graphics/wrong.png" target="RESULTS/result" />
+            <assign property="object:RESULTS/label.text" value="WRONG!" />
+            <assign property="object:RESULTS/label.color" value="#EF392F" />
+            <alpha value="1" target="RESULTS" />
+        </action>
+        
+        <action name="next-question" >
+            <sync startdelay="10">
+                <translate xpos="-100%" time=".25" curve="easeout" target="QUIZ/inner" />
+                <alpha value="0" target="RESULTS" />
+                <assign property="object:QUIZ/inner/header.text" value="Question [var:question] of 6" />
+                <assign property="object:QUIZ/inner/question.text" value="[datasource:spinoffs.[var:question].question]" />
+                <assign property="object:ANSWERS/item-0/img.url" value="http://spinoffs.ingenology.com/[eval: JSON.parse('[datasource:spinoffs.[var:question].choices]')[0][1] ]" />
+                <assign property="object:ANSWERS/item-1/img.url" value="http://spinoffs.ingenology.com/[eval: JSON.parse('[datasource:spinoffs.[var:question].choices]')[1][1] ]" />
+                <assign property="object:ANSWERS/item-2/img.url" value="http://spinoffs.ingenology.com/[eval: JSON.parse('[datasource:spinoffs.[var:question].choices]')[2][1] ]" />
+                <translate xpos="100%" curve="easeout" target="QUIZ/inner" />
+                <translate xpos="0%" time=".3" curve="easeout" target="QUIZ/inner" />
+            </sync>
+        </action>
+        
+        <action name="show-success">
+            <sync>
+                <replace type="flipcenterleft" target="CONTAINER/[var:section]" time=".25" replacement="SUCCESS" />
+              	<if lhs="[var:level]" operator="e" rhs="1">
+                  <assign property="object:SUCCESS-IMG.source" value="graphics/Level-1-Social.png" />
+                </if>
+                <if lhs="[var:level]" operator="e" rhs="2">
+                  <assign property="object:SUCCESS-IMG.source" value="graphics/Level-2-Social.png" />
+                </if>
+                <if lhs="[var:level]" operator="e" rhs="3">
+                  <assign property="object:SUCCESS-IMG.source" value="graphics/Level-3-Social.png" />
+                </if>
+                <assign property="var:section" value="success" />
+                <play action="hide-quiz" />
+            </sync>
+        </action>
+        
+        <action name="next-mission" >
+            <alpha value="0" target="curtain" />
+            <if lhs="[var:level]" operator="lt" rhs="3">
+                <play action="level-increase" />
+            </if>
+            <if lhs="[var:level]" operator="e" rhs="3">
+                <alert message="you've completed all of the missions!  we'll reset to level one so you can see everything again!" />
+                <play action="level-reset" />
+            </if>
+        </action>
+        
+        <action name="level-increase">
+            <assign property="var:level" value="[eval: [var:level]+1]" />
+            <play action="load-level" />
+        </action>
+        
+        <action name="level-reset">
+            <assign property="var:level" value="1" />
+            <play action="load-level" />
+        </action>
+        
+        <action name="load-level" >
+            <assign property="datasource:spinoffs.source" value="http://spinoffs.ingenology.com/v1/facts/?format=json&amp;level=[var:level]" />
+        </action>
+
+        <action name="close-success">
+            <translate xpos="100%" time=".25" curve="easeout" target="SUCCESS" />
+        </action>
+
+        <action name="null" >
+        </action>
+        
+        <!--!SHARE ACTIONS -->
+    		<!-- tweet -->
+    		<action name="tweet">
+        		<alpha value="0" target="curtain" />
+    			<if lhs="[preferences:twitter-activated]" operator="ne" rhs="yes" >
+    				<assign property="datasource:twittersource.source" value="https://api.twitter.com/1/statuses/update.xml?status=Test1234" />
+    			</if>
+    			<if lhs="[preferences:twitter-activated]" operator="=" rhs="yes" >
+    				<assign property="datasource:twittersource.source" value="https://api.twitter.com/1/statuses/update.xml?status=Test1234" />
+    				<sync loop="no">
+        				<alert message="story tweeted!" />
+    				</sync>
+    			</if>
+    		</action>
+
+            <action name="twitter-check2" datasource="twittersource" datasourceevent="querycomplete" >
+                <alert message="story tweeted!" />
+            </action>
+
+    		<!-- Twitter Submit ID -->
+    		<action name="display-twitter-auth" datasource="twittersource" datasourceevent="interactionrequest">
+    			<set tofront="yes" target="BROWSER" />
+    			<alpha value="1" time=".25" target="BROWSER" />
+    			<translate ypos="0%" time=".5" target="BROWSER" />
+    			<assign property="object:WEB-VIEWER.url" value="[datasource:twittersource.dataSourceInteractionRequest]" />
+    			<alpha value="1" target="TWITTERAUTH" />
+    		</action>
+
+    		<!-- Twitter Submit ID -->
+    		<action name="submit-twit-id">
+    			<if lhs="[var:activating-twitter]" operator="ne" rhs="yes">
+    				<assign property="datasource:twittersource.source" value="https://api.twitter.com/1/statuses/update.xml?status=Test1234" />
+    				<sync loop="no">
+        				<alert message="story tweeted!" />
+    				</sync>
+    			</if>
+    			<alpha value="0" time="1" target=".."/>
+    			<keyboard visible="no" target="../id-textfield"/>
+    			<assign property="datasource:twittersource.dataSourceInteractionResponse" value="[object:id-textfield.text]" />
+    			<alpha value="1" time=".25" target="BROWSER" />
+    			<translate ypos="100%" time=".5" target="BROWSER" />
+    			<load url="about:blank" target="WEB-VIEWER" />
+    			<alpha value="0" target="TWITTERAUTH" />
+    			<assign property="preferences:twitter-activated" value="yes"/>
+    			<assign property="var:activating-twitter" value="no" />
+    		</action>
+
+    		<action name="close-browser">
+    			<alpha value="1" time=".25" target="BROWSER" />
+    			<translate ypos="100%" time=".5" target="BROWSER" />
+    			<load url="about:blank" target="WEB-VIEWER" />
+    			<alpha value="0" target="TWITTERAUTH" />
+    		</action>
+
+    		<!-- facebook post -->
+    		<action name="facebook-post">
+        		<alpha value="0" target="curtain" />
+        		<assign property="datasource:facebook.source" value="facebook:///me/feed?message=Test5678" />
+    			<alert message="message shared!" />
+    		</action>
+
+            <action name="facebook-error" datasource="facebook" datasourceevent="datasourceerror">
+                <alert message="This article could not be shared due to an error with Facebook.  Please try again later. ///[datasource:facebook.error]/// currentShareMsg is [var:currentShareMsg]" />
+            </action>        
+
+            <action name="select">
+                <alpha value=".5" target="curtain" />
+            </action>
+
+    </actions>
+</wire>

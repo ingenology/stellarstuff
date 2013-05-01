@@ -1,0 +1,49 @@
+<wire>
+ <main>   
+    <panel name="body-background" width="100%" height="100%" background="#777777"></panel>
+    <!--
+    *** These are the defined regions we want to use to trigger actions when my draggable object enters them 
+    *** onhover, ondrop and onhoveraway are all attributes I can use to call actions once the draggable object enters the region
+    *** If you overlap given regions, all events outlined by onhover, ondrop and onhover away will be triggered. 
+        The use of variables and if statements can allow you to trigger only one or a given event.
+    -->
+    <panel name="top" alias="TOP"  width="100%" height="50%" background="#1BB2E0" alpha="1" onhover="onhover-action" onhoveraway="onhoveraway-action" ondrop="ondrop-action">
+        <text name="top-label" width="100%" height="fit" color="#ffffff" font="Helvetica" size="50" alignment="center" valign="center" text="Drag to Me!"></text>
+    </panel>
+    <panel name="bottom" alias="BOTTOM" width="100%" height="50%" valign="bottom" background="#E01B9B" alpha="1" onhover="onhover-action" onhoveraway="onhoveraway-action" ondrop="ondrop-action">
+        <text name="bottom-label" width="100%" height="fit" color="#ffffff" font="Helvetica" size="50" alignment="center" valign="center" text="No! Drag to Me!"></text>
+    </panel>
+    
+    <!-- a simple line to show the divide between regions -->
+    <panel name="divider" width="100%" height="1" background="#000000" valign="center"></panel>
+    
+    <!--
+     *** This is my object that is draggable, defined with the 'draggable="yes"' attribute. 
+     *** I can also define the dragorientation (horizontal/vertical) as well as assign an ondrag action to occur. If I don't
+         define a orientation, I have free movement witin the parent.
+     *** An object that is draggable can only be dragged within it's immediate parent object.
+     -->
+    <panel name="title" width="100%" height="10%" align="center" valign="bottom" background="000000">
+            <text name="appname" color="#ffffff" width="100%" height="100%" valign="center" font="arial" size="36" alignment="center" text="Drag and Drop Example"></text>
+    </panel>
+    <panel name="block" alias="BLOCK" width="25%" height="15%" cornerradius="10" background="#000000" shadowradius="5" shadowopacity=".7" shadowxoffset="5" shadowyoffset="5" draggable="yes" ondrag="ondrag-action">
+      <image name="icon" alias="BLOCKICON" source="RWDrag/right_24x24.png" valign="center" align="center" ignoretouches="yes"></image>
+    </panel>
+ </main>     
+ <actions> 
+    <action name="ondrag-action">
+      <load source="RWDrag/left_24x24.png" target="icon" />
+    </action>
+    <action name="ondrop-action">
+      <load source="RWDrag/right_24x24.png" target="BLOCKICON" />
+        <alert message="good choice" />
+    </action>
+    <action name="onhover-action">
+        <alpha value=".5" time=".2" />
+    </action>
+    <action name="onhoveraway-action">
+        <alpha value="1" time=".2" />
+    </action>
+</actions>
+    
+</wire>
